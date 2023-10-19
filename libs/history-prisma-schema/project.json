@@ -1,0 +1,55 @@
+{
+  "name": "history-prisma-schema",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/history-prisma-schema/prisma",
+  "projectType": "library",
+  "targets": {
+    "db-validate": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "npx prisma validate --schema ./prisma/schema.prisma",
+        "cwd": "libs/history-prisma-schema"
+      }
+    },
+    "db-migrate": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "npx prisma migrate dev --schema ./prisma/schema.prisma --name initial --skip-generate --skip-seed",
+        "cwd": "libs/history-prisma-schema"
+      }
+    },
+    "db-reset": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "npx prisma migrate reset --schema ./prisma/schema.prisma --force --skip-generate --skip-seed",
+        "cwd": "libs/history-prisma-schema"
+      }
+    },
+    "db-generate": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "npx prisma generate --schema prisma/schema.prisma",
+        "cwd": "libs/history-prisma-schema"
+      }
+    },
+    "db-fill": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "npx prisma db seed",
+        "cwd": "libs/history-prisma-schema"
+      }
+    },
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": [
+          "libs/history-prisma-schema/**/*.ts",
+          "libs/history-prisma-schema/package.json"
+        ]
+      }
+    }
+  },
+
+  "tags": []
+}
