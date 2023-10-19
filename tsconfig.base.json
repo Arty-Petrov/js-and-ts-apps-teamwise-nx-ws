@@ -18,6 +18,7 @@
       "@service/constants": ["libs/constants/src/index.ts"],
       "@service/contracts": ["libs/contracts/src/index.ts"],
       "@service/shared-types": ["libs/shared-types/src/index.ts"],
+      "@service/users-prisma-client": ["libs/users-prisma-client/src/index.ts"],
     }
   },
   "exclude": ["node_modules", "tmp"]

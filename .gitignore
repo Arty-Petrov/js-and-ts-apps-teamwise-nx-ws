@@ -5,6 +5,10 @@ dist
 tmp
 /out-tsc
 
+# Prisma outputs
+db
+migrations
+
 # dependencies
 node_modules
 
@@ -25,6 +29,7 @@ node_modules
 !.vscode/extensions.json
 
 # misc
+.env
 /.sass-cache
 /connect.lock
 /coverage
