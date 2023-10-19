@@ -1,5 +1,20 @@
 version: '3.5'
 services:
+  rabbitmq:
+    image: rabbitmq:3.12.7-management
+    container_name: js-and-ts-apps-teamwise-nx-ws.rabbitmq
+    ports:
+      - '1084:15672'
+      - '5672:5672'
+    environment:
+      RABBITMQ_DEFAULT_USER: admin
+      RABBITMQ_DEFAULT_PASS: test
+    healthcheck:
+      test: rabbitmq-diagnostics -q ping
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
   postgres:
     image: postgres:16-alpine
     container_name: js-and-ts-apps-teamwise-nx-ws.users.postgres
