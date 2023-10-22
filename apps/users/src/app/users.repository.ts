@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { UserGetListDto } from '@service/contracts';
 import { User } from '@service/shared-types';
 import { UsersPrismaClientService } from '@service/users-prisma-client';
 import UserEntity from './users.entity';
@@ -18,5 +19,17 @@ export default class UsersRepository {
     return this.prisma.user.findFirst({
       where: {email},
     }) as unknown as Required<User>;
+  }
+
+  async find({sort, limit, page}: UserGetListDto): Promise<Required<User>[]> {
+    return this.prisma.user.findMany({
+      orderBy: [
+        {
+          createdAt: sort,
+        },
+      ],
+      take: limit,
+      skip: page > 0 ? limit * (page - 1) : undefined,
+    });
   }
 }

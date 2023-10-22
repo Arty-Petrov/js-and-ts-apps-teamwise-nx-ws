@@ -14,3 +14,13 @@ Content-Type: application/json
   client.global.set("userId", response.body.id);
 %}
 ###
+
+# @name GET USERS LIST
+GET {{baseUrl}}/{{route}}?sort=asc&limit=2&page=1 HTTP/1.1
+Accept: application/json
+
+> {%
+  //update userId with random id string from response array
+  client.global.set("userId", response.body[Math.round(response.body.length*Math.random())].id);
+%}
+###
