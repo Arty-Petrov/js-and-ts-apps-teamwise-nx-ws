@@ -13,4 +13,19 @@ export class HistoryRepository {
             data: {...entity.toObject()},
         });
     }
+
+    async find({userId: id, sort, limit, page}) {
+        return this.prisma.history.findMany({
+            where: {
+                userId: id,
+            },
+            take: limit,
+            orderBy: [
+                {
+                    createdAt: sort,
+                },
+            ],
+            skip: page > 0 ? limit * (page - 1) : undefined,
+        });
+    }
 }

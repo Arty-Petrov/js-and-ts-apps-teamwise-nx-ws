@@ -12,4 +12,8 @@ export class HistoryService {
     const historyEntity = new HistoryEntity(dto);
     await this.historyRepository.create(historyEntity);
   }
+
+  async getList(query) {
+    return this.historyRepository.find(query);
+  }
 }
