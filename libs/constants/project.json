@@ -31,5 +31,5 @@
       }
     }
   },
-  "tags": []
+  "tags": ["scope:shared", "scope:constants"]
 }

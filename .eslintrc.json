@@ -13,6 +13,22 @@
             "allow": [],
             "depConstraints": [
               {
+                "sourceTag": "scope:shared",
+                "onlyDependOnLibsWithTags": ["scope:shared"]
+              },
+              {
+                "sourceTag": "scope:shared",
+                "onlyDependOnLibsWithTags": ["scope:shared"]
+              },
+              {
+                "sourceTag": "scope:users",
+                "onlyDependOnLibsWithTags": ["scope:shared", "scope:users"]
+              },
+              {
+                "sourceTag": "scope:history",
+                "onlyDependOnLibsWithTags": ["scope:shared", "scope:history"]
+              },
+              {
                 "sourceTag": "*",
                 "onlyDependOnLibsWithTags": ["*"]
               }
