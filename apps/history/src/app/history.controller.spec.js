@@ -1,17 +1,17 @@
 import { Test } from '@nestjs/testing';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { HistoryController } from './history.controller';
+import { HistoryService } from './history.service';
 
 describe('AppController', () => {
   let appController;
 
   beforeEach(async () => {
     const app = await Test.createTestingModule({
-      controllers: [AppController],
-      providers: [AppService],
+      controllers: [HistoryController],
+      providers: [HistoryService],
     }).compile();
 
-    appController = app.get(AppController);
+    appController = app.get(HistoryController);
   });
 
   describe('root', () => {

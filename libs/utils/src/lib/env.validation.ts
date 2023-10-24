@@ -37,7 +37,7 @@ export function validateEnvironments(config: Record<string, unknown>) {
     const {issues} = validationResult.error;
     const errorDescriptions = issues.map((issue) => '\n' + `${issue.path}: ${issue.message}`);
     throw new Error(
-      `Environments config isn't valid: ${errorDescriptions.join(', ')}`
+      `Environments config isn't valid: ${errorDescriptions.join(', ')}`,
     );
   }
   return validationResult.data;
