@@ -1,3 +1,4 @@
+import { AmqpConnection } from '@golevelup/nestjs-rabbitmq';
 import {
   ConflictException,
   HttpException,
@@ -6,6 +7,7 @@ import {
   InternalServerErrorException,
   NotFoundException,
 } from '@nestjs/common';
+import { RmqExchange, UsersActionStatus } from '@service/constants';
 import {
   UserCreateDto,
   UserCreateRdo,
@@ -18,9 +20,13 @@ import { User } from '@service/shared-types';
 import UserEntity from './users.entity';
 import UsersRepository from './users.repository';
 
+type Keys = keyof typeof UsersActionStatus;
+type Status = typeof UsersActionStatus[Keys];
+
 @Injectable()
 export class UsersService {
   constructor(
+    private readonly amqpConnection: AmqpConnection,
     private readonly usersRepository: UsersRepository,
   ) {
   }
@@ -38,6 +44,10 @@ export class UsersService {
         `User with email: ${email} isn't created`,
       );
     }
+    await this.publishHistoryLog(
+      UsersActionStatus.Create,
+      {...entity.toObject(), id: user.id},
+    );
     return user;
   }
 
@@ -58,6 +68,15 @@ export class UsersService {
     }
     const newUserEntity = new UserEntity({...existUser, ...dto});
     const user = await this.usersRepository.update(id, newUserEntity);
+    if (!user) {
+      throw new InternalServerErrorException(
+        `User with id: ${id} isn't updated`,
+      );
+    }
+    await this.publishHistoryLog(
+      UsersActionStatus.Update,
+      {...updatedEntityData, id: id},
+    );
     return user;
   }
 
@@ -75,5 +94,20 @@ export class UsersService {
       throw new NotFoundException(`The user with id:${id} doesn't exists`);
     }
     return existUser;
+  }
+
+  private async publishHistoryLog(
+    status: Status,
+    user: Partial<User>): Promise<void> {
+    const {id: userId} = user;
+    delete user.id;
+    await this.amqpConnection.publish(
+      RmqExchange.history.name,
+      'history.create-log.command',
+      {
+        userId: userId,
+        status: status,
+        change: {...user},
+      });
   }
 }

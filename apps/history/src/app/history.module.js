@@ -6,7 +6,7 @@ import { HistoryPrismaClientModule } from '@service/history-prisma-client';
 import { rabbitMqOptions, RmqModule } from '@service/rmq-module';
 import { ZodSerializerInterceptor } from 'nestjs-zod';
 import { validateEnvironments } from '@service/utils';
-import { HistoryRepository } from './history-repository';
+import { HistoryRepository } from './history.repository';
 import { HistoryCommand } from './history.command';
 import { HistoryController } from './history.controller';
 import { HistoryService } from './history.service';
