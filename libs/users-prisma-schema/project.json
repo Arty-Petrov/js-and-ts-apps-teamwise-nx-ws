@@ -1,42 +1,42 @@
 {
   "name": "users-prisma-schema",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "libs/users-prisma-schema/prisma",
+  "sourceRoot": "libs/users-prisma-schema/src",
   "projectType": "library",
   "targets": {
     "db-validate": {
       "executor": "nx:run-commands",
       "options": {
         "command": "npx prisma validate --schema ./prisma/schema.prisma",
-        "cwd": "libs/users-prisma-schema"
+        "cwd": "libs/users-prisma-schema/src/lib"
       }
     },
     "db-migrate": {
       "executor": "nx:run-commands",
       "options": {
         "command": "npx prisma migrate dev --schema ./prisma/schema.prisma --name initial --skip-generate --skip-seed",
-        "cwd": "libs/users-prisma-schema"
+        "cwd": "libs/users-prisma-schema/src/lib"
       }
     },
     "db-reset": {
       "executor": "nx:run-commands",
       "options": {
         "command": "npx prisma migrate reset --schema ./prisma/schema.prisma --force --skip-generate --skip-seed",
-        "cwd": "libs/users-prisma-schema"
+        "cwd": "libs/users-prisma-schema/src/lib"
       }
     },
     "db-generate": {
       "executor": "nx:run-commands",
       "options": {
         "command": "npx prisma generate --schema prisma/schema.prisma",
-        "cwd": "libs/users-prisma-schema"
+        "cwd": "libs/users-prisma-schema/src/lib"
       }
     },
     "db-fill": {
       "executor": "nx:run-commands",
       "options": {
         "command": "npx prisma db seed",
-        "cwd": "libs/users-prisma-schema"
+        "cwd": "libs/users-prisma-schema/src/lib"
       }
     },
     "lint": {
