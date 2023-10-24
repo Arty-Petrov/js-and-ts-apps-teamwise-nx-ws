@@ -1,7 +1,7 @@
-import { Body, Controller, Get, HttpStatus, Post, Query } from '@nestjs/common';
-import { ApiBody, ApiOperation, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { Body, Controller, Get, HttpStatus, Param, ParseUUIDPipe, Post, Put, Query } from '@nestjs/common';
+import { ApiBody, ApiOperation, ApiParam, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { QuerySortDirection } from '@service/constants';
-import { UserCreate, UserGetList } from '@service/contracts';
+import { UserCreate, UserGetList, UserUpdate } from '@service/contracts';
 import { ZodSerializerDto } from 'nestjs-zod';
 import { UsersService } from './users.service';
 
@@ -61,5 +61,36 @@ export class UsersController {
     @Query() query: UserGetList.Request,
   ): Promise<UserGetList.Response[]> {
     return this.usersService.getList(query);
+  }
+
+  @Put(':id')
+  @ApiOperation({description: 'Update user data'})
+  @ApiParam({
+    name: 'id',
+    description: 'The user id',
+    required: true,
+  })
+  @ApiBody({
+    type: UserUpdate.Request,
+  })
+  @ApiResponse({
+    status: HttpStatus.OK,
+    type: UserCreate.Response,
+    description: 'The new user has been successfully updated.',
+  })
+  @ApiResponse({
+    status: HttpStatus.CONFLICT,
+    description: 'The email is already exist.',
+  })
+  @ApiResponse({
+    status: HttpStatus.NOT_FOUND,
+    description: 'The the user id is not found.',
+  })
+  @ZodSerializerDto(UserUpdate.Response)
+  async updateUser(
+    @Param('id', ParseUUIDPipe) userId: string,
+    @Body() dto: UserUpdate.Request,
+  ): Promise<UserUpdate.Response> {
+    return this.usersService.update(userId, dto);
   }
 }

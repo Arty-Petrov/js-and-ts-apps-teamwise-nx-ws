@@ -1,4 +1,5 @@
 import { User } from '@service/shared-types';
+import { updatedDiff } from 'deep-object-diff';
 
 export default class UserEntity {
   id?: string;
@@ -13,6 +14,12 @@ export default class UserEntity {
 
   toObject(): UserEntity {
     return {...this};
+  }
+
+  getUpdatedFields(user: Partial<User>): Partial<User> {
+    const oldUser = {...this};
+    const newUser = {...user};
+    return {...updatedDiff(oldUser, newUser)} as unknown as Partial<User>;
   }
 
   fillEntity(entity: User): void {

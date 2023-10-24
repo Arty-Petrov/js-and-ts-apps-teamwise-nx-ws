@@ -6,7 +6,7 @@ Content-Type: application/json
 
 {
   "name": "kate",
-  "email": "78wqq13o@ya.ru",
+  "email": "78wqq13eeeeo@ya.ru",
   "dateBirth": "2022-02-01",
   "isAdmin": true
 }
@@ -16,11 +16,23 @@ Content-Type: application/json
 ###
 
 # @name GET USERS LIST
-GET {{baseUrl}}/{{route}}?sort=asc&limit=2&page=1 HTTP/1.1
+GET {{baseUrl}}/{{route}}?sort=asc&limit=u&page=1 HTTP/1.1
 Accept: application/json
 
 > {%
   //update userId with random id string from response array
   client.global.set("userId", response.body[Math.round(response.body.length*Math.random())].id);
 %}
+###
+
+# @name UPDATE USER
+PUT {{baseUrl}}{{route}}/{{userId}} HTTP/1.1
+Content-Type: application/json
+
+{
+  "name": "s9se",
+  "email": "w1e10450@ya.ru",
+  "dateBirth": "2020-02-01",
+  "isAdmin": true
+}
 ###
