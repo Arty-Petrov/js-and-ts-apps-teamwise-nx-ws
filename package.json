@@ -7,6 +7,8 @@
   },
   "private": true,
   "dependencies": {
+    "@anatine/zod-mock": "^3.13.2",
+    "@faker-js/faker": "^8.2.0",
     "@golevelup/nestjs-modules": "^0.7.0",
     "@golevelup/nestjs-rabbitmq": "^4.0.0",
     "@nestjs/common": "^10.0.2",
