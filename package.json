@@ -3,7 +3,18 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "serve": "concurrently \"nx run users:serve\" \"nx run history:serve\""
+    "services:build": "nx run-many -t build",
+    "services:serve": "nx run-many -t serve",
+    "services:lint": "nx run-many -t lint",
+    "services:test": "nx run-many -t test",
+    "services:docker-up": "nx run-many -t docker-up",
+    "services:docker-start": "nx run-many -t docker-start",
+    "services:docker-stop": "nx run-many -t docker-stop",
+    "services:db-validate": "nx run-many -t db-validate",
+    "services:db-migrate": "nx run-many -t db-migrate",
+    "services:db-reset": "nx run-many -t db-reset",
+    "services:db-generate": "nx run-many -t db-generate",
+    "services:db-fill": "nx run-many -t db-fill"
   },
   "private": true,
   "dependencies": {
@@ -48,7 +59,6 @@
     "@typescript-eslint/eslint-plugin": "^5.60.1",
     "@typescript-eslint/parser": "^5.60.1",
     "babel-jest": "^29.7.0",
-    "concurrently": "^8.2.1",
     "eslint": "~8.46.0",
     "eslint-config-prettier": "^8.1.0",
     "jest": "^29.4.1",
